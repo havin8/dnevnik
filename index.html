@@ -155,14 +155,14 @@ figcaption{padding:10px 4px 0;font-size:13px;color:var(--soft)}
 .ba-it .tg{position:absolute;top:-12px;left:18px;z-index:2;padding:5px 13px;border-radius:999px;font:700 11px var(--fb);letter-spacing:.14em;text-transform:uppercase;background:#1b1b1b;border:1.5px solid var(--line);color:var(--ink)}
 .ba-it .tg.r{background:var(--acc);border-color:var(--acc);color:#151008}
 .ba-ar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;color:var(--acc);border:1.5px solid rgba(var(--acc-rgb),.45);background:rgba(var(--acc-rgb),.08)}.ba-ar svg{width:18px;height:18px}
-.cmp{position:relative;border-radius:var(--r-md);overflow:hidden;border:1.5px solid var(--line);aspect-ratio:1568/780;background:#0a0a0a;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.cmp{position:relative;border-radius:var(--r-md);overflow:hidden;border:1.5px solid var(--line);aspect-ratio:2000/1371;background:#0a0a0a;touch-action:pan-y;user-select:none;-webkit-user-select:none}
 .cmp img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center}
 
 .cmp .a{clip-path:inset(0 calc(100% - var(--x,50%)) 0 0)}
 .cmp .ln{position:absolute;top:0;bottom:0;left:var(--x,50%);width:2px;margin-left:-1px;background:var(--acc);box-shadow:0 0 18px var(--acc)}
 .cmp .knob{position:absolute;top:50%;left:var(--x,50%);width:48px;height:48px;margin:-24px 0 0 -24px;border-radius:50%;background:var(--acc-d);color:#fff;display:grid;place-items:center;box-shadow:0 8px 24px rgba(0,0,0,.5);pointer-events:none}
-.cmp .tg{position:absolute;top:14px;padding:4px 12px;border-radius:999px;font:700 11px var(--fb);letter-spacing:.14em;text-transform:uppercase;background:rgba(0,0,0,.75);color:var(--ink)}
-.cmp .tg.l{left:14px}.cmp .tg.r{right:14px;background:var(--acc);color:#151008}
+.cmp .tg{position:absolute;bottom:14px;padding:4px 12px;border-radius:999px;font:700 11px var(--fb);letter-spacing:.14em;text-transform:uppercase;background:rgba(0,0,0,.75);color:var(--ink)}
+.cmp .tg.l{left:14px}@media (max-width:620px){.cmp .tg{bottom:8px;padding:3px 8px;font-size:9px;letter-spacing:.1em}.cmp .tg.l{left:8px}.cmp .tg.r{right:8px}}.cmp .tg.r{right:14px;background:var(--acc);color:#151008}
 .cmp input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0}
 
 
@@ -248,8 +248,7 @@ figcaption{padding:10px 4px 0;font-size:13px;color:var(--soft)}
 .steps li::before{counter-increment:s;content:counter(s);width:28px;height:28px;border-radius:50%;display:grid;place-items:center;border:1.5px solid rgba(var(--acc-rgb),.55);color:var(--acc);font:600 12.5px var(--fh)}
 .steps li b{color:var(--ink)}
 .steps a{color:var(--ink);text-decoration:underline;text-decoration-color:rgba(var(--acc-rgb),.6);text-decoration-thickness:1.5px;text-underline-offset:3px;transition:color .2s}.steps li>span{line-height:1.6;padding-top:2px}.steps a:hover{color:var(--acc)}
-.plat-h .thx{margin-left:auto;align-self:flex-start;white-space:nowrap;text-align:right;font:400 12px/1.35 var(--fb);color:var(--soft);font-style:italic}
-@media (max-width:620px){.plat-h{flex-wrap:wrap}.plat-h .thx{margin-left:56px;max-width:none;text-align:left}}
+.tip .thx{display:block;text-align:right;margin-top:10px;font:italic 400 12.5px var(--fb);color:var(--soft)}
 .steps kbd{font:500 12px var(--fm);padding:1px 6px;border-radius:6px;background:#1c1c1c;border:1px solid #333;color:var(--ink)}
 .tip{font-size:13px;color:var(--soft);border-top:1px solid var(--line2);padding-top:12px;margin-top:auto}
 @media (max-width:860px){.inst{grid-template-columns:1fr}}
@@ -466,8 +465,8 @@ dialog.lbx button{position:sticky;top:10px;float:right;margin:10px;z-index:2;wid
 <section class="wrap" id="ba">
   <div class="sh c reveal"><span class="eb">До и после</span><h2>Те же оценки, другой журнал</h2><p class="lead">Слева - сентябрь в официальном журнале, справа - тот же сентябрь во “Всех парах” Дневника: по неделям и дням, с предметом, номером пары и оценками. Потяни ползунок.</p></div>
   <div class="cmp reveal" id="cmp" style="--x:50%">
-    <img class="d" src="ba-dn.webp" width="1568" height="780" alt="Все пары за сентябрь в Дневнике">
-    <img class="a" src="ba-off.webp" width="1568" height="780" alt="Оценки за сентябрь в официальном журнале">
+    <img class="d" src="ba-dn.webp" width="2000" height="1371" alt="Все пары за сентябрь в Дневнике">
+    <img class="a" src="ba-off.webp" width="2000" height="1371" alt="Оценки за сентябрь в официальном журнале">
     <span class="tg l">Журнал</span><span class="tg r">Дневник</span>
     <span class="ln"></span><span class="knob"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l-6 6 6 6M15 6l6 6-6 6"/></svg></span>
     <input type="range" id="cmpr" min="0" max="100" value="50" aria-label="Сравнение: журнал и Дневник">
@@ -713,7 +712,7 @@ dialog.lbx button{position:sticky;top:10px;float:right;margin:10px;z-index:2;wid
         <li><span>Открыть сайт журнала.</span></li>
       </ol>
       <p class="tip">Tampermonkey ставится один раз - дальше Дневник сам сообщает о новой версии.</p></div>
-    <div class="plat glass reveal"><div class="plat-h"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M9 6h6"/></svg></span><div><b>Android</b><span>Edge, Firefox, Яндекс Браузер, Cromite</span></div><span class="thx">Спасибо Михаилу за помощь</span></div>
+    <div class="plat glass reveal"><div class="plat-h"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M9 6h6"/></svg></span><div><b>Android</b><span>Edge, Firefox, Яндекс Браузер, Cromite</span></div></div>
       <ol class="steps">
         <li><span>Скачать файл Дневника с <a href="https://havin8.github.io/dnevnik/" target="_blank" rel="noopener">сайта</a> или <a href="https://github.com/havin8/dnevnik-script/blob/main/dist/dnevnik.user.js" target="_blank" rel="noopener">GitHub</a>.</span></li>
         <li><span>Поставить расширение <a href="https://chromewebstore.google.com/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=ru" target="_blank" rel="noopener">Tampermonkey</a>.</span></li>
@@ -721,7 +720,7 @@ dialog.lbx button{position:sticky;top:10px;float:right;margin:10px;z-index:2;wid
         <li><span>Открыть <b>“Панель управления”</b> Tampermonkey → промотать до <b>“Утилиты”</b> → <b>“Импорт из файла”</b> → выбрать скачанный файл Дневника → в окне подтверждения нажать <b>“Установить”</b>.</span></li>
         <li><span>Открыть сайт журнала.</span></li>
       </ol>
-      <p class="tip">Chrome на Android расширения не поддерживает, поэтому нужен браузер с расширениями. Проверено в Cromite.</p></div>
+      <p class="tip">Chrome на Android расширения не поддерживает, поэтому нужен браузер с расширениями. Проверено в Cromite.<span class="thx">Спасибо Михаилу за помощь</span></p></div>
   </div>
   <div class="safe2">
     <div class="safe reveal"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span><p><b>Userscripts - безопасное приложение.</b> Распространяется через App Store, где каждое приложение проходит проверку Apple, и у него открытый исходный код.</p></div>
