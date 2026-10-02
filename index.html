@@ -151,6 +151,10 @@ figcaption{padding:10px 4px 0;font-size:13px;color:var(--soft)}
 @media (max-width:620px){.shot .vp{max-height:none!important;overflow:visible}.shot .hint{display:none}:root{--gap:44px}.tourbox{padding:16px 12px;border-radius:26px}.story{margin-top:22px}}
 
 /* до и после */
+.ba2{display:flex;flex-direction:column;align-items:center;gap:10px}.ba-it{position:relative;width:100%}
+.ba-it .tg{position:absolute;top:-12px;left:18px;z-index:2;padding:5px 13px;border-radius:999px;font:700 11px var(--fb);letter-spacing:.14em;text-transform:uppercase;background:#1b1b1b;border:1.5px solid var(--line);color:var(--ink)}
+.ba-it .tg.r{background:var(--acc);border-color:var(--acc);color:#151008}
+.ba-ar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;color:var(--acc);border:1.5px solid rgba(var(--acc-rgb),.45);background:rgba(var(--acc-rgb),.08)}.ba-ar svg{width:18px;height:18px}
 .cmp{position:relative;border-radius:var(--r-md);overflow:hidden;border:1.5px solid var(--line);aspect-ratio:1.75/1;background:#0a0a0a;touch-action:pan-y;user-select:none;-webkit-user-select:none}
 .cmp img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:left top}
 .cmp img.d{transform:scale(1.06);transform-origin:left top}
@@ -243,6 +247,9 @@ figcaption{padding:10px 4px 0;font-size:13px;color:var(--soft)}
 .steps li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;align-items:start;color:var(--muted);font-size:14px}
 .steps li::before{counter-increment:s;content:counter(s);width:28px;height:28px;border-radius:50%;display:grid;place-items:center;border:1.5px solid rgba(var(--acc-rgb),.55);color:var(--acc);font:600 12.5px var(--fh)}
 .steps li b{color:var(--ink)}
+.steps a{color:var(--ink);text-decoration:underline;text-decoration-color:rgba(var(--acc-rgb),.6);text-decoration-thickness:1.5px;text-underline-offset:3px;transition:color .2s}.steps li>span{line-height:1.6;padding-top:2px}.steps a:hover{color:var(--acc)}
+.plat-h .thx{margin-left:auto;align-self:flex-start;white-space:nowrap;text-align:right;font:400 12px/1.35 var(--fb);color:var(--soft);font-style:italic}
+@media (max-width:620px){.plat-h{flex-wrap:wrap}.plat-h .thx{margin-left:56px;max-width:none;text-align:left}}
 .steps kbd{font:500 12px var(--fm);padding:1px 6px;border-radius:6px;background:#1c1c1c;border:1px solid #333;color:var(--ink)}
 .tip{font-size:13px;color:var(--soft);border-top:1px solid var(--line2);padding-top:12px;margin-top:auto}
 @media (max-width:860px){.inst{grid-template-columns:1fr}}
@@ -457,13 +464,11 @@ dialog.lbx button{position:sticky;top:10px;float:right;margin:10px;z-index:2;wid
 </section>
 
 <section class="wrap" id="ba">
-  <div class="sh c reveal"><span class="eb">До и после</span><h2>Те же оценки, другой журнал</h2><p class="lead">Слева - месяц в официальном журнале, справа - тот же месяц во “Всех парах” Дневника. Потяни ползунок.</p></div>
-  <div class="cmp reveal" id="cmp" style="--x:50%">
-    <img class="d" src="pairs-month.webp" width="2144" height="1802" alt="Все пары за месяц в Дневнике">
-    <img class="a" src="official.webp" width="1800" height="528" alt="Оценки в официальном журнале">
-    <span class="tg l">Журнал</span><span class="tg r">Дневник</span>
-    <span class="ln"></span><span class="knob"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l-6 6 6 6M15 6l6 6-6 6"/></svg></span>
-    <input type="range" id="cmpr" min="0" max="100" value="50" aria-label="Сравнение: журнал и Дневник">
+  <div class="sh c reveal"><span class="eb">До и после</span><h2>Те же оценки, другой журнал</h2><p class="lead">Сверху - сентябрь в официальном журнале, снизу - тот же сентябрь во “Всех парах” Дневника. Пары разложены по неделям и дням, у каждой видно предмет, номер пары и оценки.</p></div>
+  <div class="ba2">
+    <div class="ba-it reveal"><span class="tg">Журнал</span><figure class="shot"><div class="bar"><i></i><i></i><i></i><span>journal.top-academy.ru</span></div><div class="vp"><img src="ba-off.webp" width="1568" height="363" alt="Оценки за сентябрь в официальном журнале" decoding="async"></div></figure></div>
+    <div class="ba-ar reveal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v15M6 13l6 6 6-6"/></svg></div>
+    <div class="ba-it reveal"><span class="tg r">Дневник</span><figure class="shot"><div class="bar"><i></i><i></i><i></i><span>journal.top-academy.ru</span></div><div class="vp"><img src="ba-dn.webp" width="1568" height="780" alt="Все пары за сентябрь в Дневнике" decoding="async"></div></figure></div>
   </div>
 </section>
 
@@ -497,7 +502,7 @@ dialog.lbx button{position:sticky;top:10px;float:right;margin:10px;z-index:2;wid
     <div class="sub"><h3>Уведомления</h3><p>Появляются над приветствием, когда есть повод, и закрываются крестиком.</p></div>
     <div class="bare"><img src="notes.webp" width="2152" height="772" alt="Уведомления на главной" decoding="async"></div>
     <div class="sub"><h3>Карточки главной</h3><p>Задания, рейтинг группы и последние начисления. Новое - с меткой.</p></div>
-    <div class="trio"><div class="bare"><img src="hw-widget.webp" width="876" height="1114" alt="Карточка домашних заданий" decoding="async"></div><div class="bare"><img src="lb.webp" width="1050" height="1158" alt="Таблица лидеров" decoding="async"></div><div class="bare"><img src="feed.webp" width="1050" height="1158" alt="Последние начисления" decoding="async"></div></div>
+    <div class="trio"><div class="bare"><img src="hw-widget.webp" width="876" height="1114" alt="Карточка домашних заданий" fetchpriority="low" decoding="async"></div><div class="bare"><img src="lb.webp" width="1050" height="1158" alt="Таблица лидеров" fetchpriority="low" decoding="async"></div><div class="bare"><img src="feed.webp" width="1050" height="1158" alt="Последние начисления" fetchpriority="low" decoding="async"></div></div>
     <div class="panel glass">
       <div class="txt"><span class="eb">Окно журнала в стиле Дневника</span><h3>Оценка занятия</h3><p>Анкета журнала открывается прямо в Дневнике: та же шкала и те же отметки, что на сайте журнала.</p>
         <div class="facts"><div><b>+1 топкоин</b>за каждую пару</div><div><b>5 звёзд</b>если не выбрать</div><div><b>Анонимно</b>преподаватель не видит</div><div><b>Подряд</b>следующая пара сразу</div></div></div>
@@ -680,38 +685,41 @@ dialog.lbx button{position:sticky;top:10px;float:right;margin:10px;z-index:2;wid
   <div class="sh c reveal"><span class="eb">Установка</span><h2>Как поставить Дневник</h2><p class="lead">Нужны менеджер юзерскриптов для своего браузера и файл dnevnik.user.js - его даю я.</p><div class="cta"><a class="pill pri" href="dnevnik.user.js" download="dnevnik.user.js"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg>Скачать dnevnik.user.js</a><a class="pill" href="https://github.com/havin8/dnevnik-script" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.75c0 .27.18.58.69.48A10 10 0 0 0 12 2z"/></svg>Код на GitHub</a></div></div>
   <div class="once reveal"><b>Ставится только один раз.</b><span>Дальше Дневник сам сообщает о новой версии - остаётся нажать “Обновить”.</span></div>
   <div class="inst">
-    <div class="plat glass reveal"><div class="plat-h"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></span><div><b>Компьютер</b><span>Chrome, Edge, Яндекс, Opera</span></div></div>
-      <ol class="steps">
-        <li><span>Поставить расширение <b>Tampermonkey</b> из магазина расширений браузера.</span></li>
-        <li><span>Открыть страницу расширений, включить <b>“Режим разработчика”</b>, а в сведениях о Tampermonkey - <b>“Разрешить пользовательские скрипты”</b>.</span></li>
-        <li><span>Нажать на Tampermonkey → <b>“Панель управления”</b> → <b>+</b>. Удалить весь демо-код.</span></li>
-        <li><span>Открыть файл Дневника, скопировать всё (<kbd>Ctrl</kbd>+<kbd>A</kbd>, <kbd>Ctrl</kbd>+<kbd>C</kbd>), вставить в Tampermonkey (<kbd>Ctrl</kbd>+<kbd>V</kbd>) и сохранить (<kbd>Ctrl</kbd>+<kbd>S</kbd>).</span></li>
-        <li><span>Зайти в журнал и дать все нужные разрешения.</span></li>
-      </ol></div>
-    <div class="plat glass reveal"><div class="plat-h"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg></span><div><b>iPhone</b><span>Safari + Userscripts</span></div></div>
-      <ol class="steps">
-        <li><span>App Store → <b>Userscripts</b> (разработчик Justin Wasack) → Загрузить. Открыть приложение один раз и нажать <b>Userscripts App Documents</b>, чтобы создалась папка.</span></li>
-        <li><span>Настройки iPhone → Приложения → Safari → Расширения → Userscripts: включить <b>“Использование расширения”</b>, в “Другие сайты” - <b>Разрешить</b>.</span></li>
-        <li><span>Файл dnevnik.user.js → “Поделиться” → <b>“Сохранить в Файлы”</b> → На iPhone → папка Userscripts. Имя должно заканчиваться на .user.js.</span></li>
-        <li><span>Открыть journal.top-academy.ru в Safari → значок слева в адресной строке → <b>Userscripts</b>, дождаться меню, закрыть и обновить страницу.</span></li>
-      </ol>
-      <p class="tip">Если открылся старый дизайн - обновить страницу ещё раз.</p></div>
     <div class="plat glass reveal"><div class="plat-h"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M1 20h22"/></svg></span><div><b>MacBook</b><span>Safari + Userscripts</span></div></div>
       <ol class="steps">
-        <li><span>App Store → <b>Userscripts</b> (Justin Wasack) → Загрузить.</span></li>
-        <li><span>Сначала открыть сайт журнала в Safari. Потом Userscripts → Open Safari Settings → <b>“Изменить веб-сайты”</b> → у journal.top-academy.ru поставить <b>“Разрешить”</b>. Если журнала нет в списке - разрешить для всех сайтов.</span></li>
-        <li><span>В Userscripts нажать <b>Change</b> и прокрутить путь вправо до конца. По папке <b>scripts</b> нажать двумя пальцами на тачпаде → <b>Show in Finder</b> и перетащить в папку scripts файл dnevnik.user.js.</span></li>
-        <li><span>Открыть журнал, нажать значок <b>&lt;/&gt;</b> слева от адресной строки и обновить страницу. Если нужно - дать разрешения.</span></li>
+        <li><span>App Store → <a href="https://apps.apple.com/us/app/userscripts/id1463298887" target="_blank" rel="noopener">Userscripts</a> (Justin Wasack) → Загрузить.</span></li>
+        <li><span>Сначала открыть сайт журнала в Safari. Потом открыть приложение Userscripts → Open Safari Settings → <b>“Изменить сайты...”</b> → у journal.top-academy.ru поставить <b>“Разрешить”</b>. Если журнала нет в списке - <b>разрешить для всех сайтов</b>.</span></li>
+        <li><span>Зайти на <a href="https://havin8.github.io/dnevnik/" target="_blank" rel="noopener">сайт проекта</a> или <a href="https://github.com/havin8/dnevnik-script/blob/main/dist/dnevnik.user.js" target="_blank" rel="noopener">GitHub</a>, скачать файл Дневника.</span></li>
+        <li><span>Нажать на значок <b>&lt;/&gt;</b> слева от адресной строки → первая иконка папки сверху → перетащить в папку <b>scripts</b> скачанный файл Дневника.</span></li>
+        <li><span>Открыть сайт журнала и дать все разрешения.</span></li>
       </ol>
       <p class="tip">В первый раз страницу иногда нужно обновить несколько раз.</p></div>
-    <div class="plat glass reveal"><div class="plat-h"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M9 6h6"/></svg></span><div><b>Android</b><span>Microsoft Edge или Firefox</span></div></div>
+    <div class="plat glass reveal"><div class="plat-h"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg></span><div><b>iPhone</b><span>Safari + Userscripts</span></div></div>
       <ol class="steps">
-        <li><span>Chrome на Android расширения не ставит, поэтому нужен <b>Microsoft Edge</b> или <b>Firefox</b> из Google Play.</span></li>
-        <li><span>Edge: меню (☰ внизу справа) → <b>Расширения</b> → Tampermonkey → Получить → Добавить. Firefox: меню → <b>Расширения</b> → Tampermonkey → Добавить.</span></li>
-        <li><span>Открыть Tampermonkey → <b>“Панель управления”</b> → <b>+</b>, удалить демо-код, вставить текст файла Дневника и сохранить.</span></li>
-        <li><span>Зайти в журнал в этом же браузере.</span></li>
+        <li><span>App Store → <a href="https://apps.apple.com/us/app/userscripts/id1463298887" target="_blank" rel="noopener">Userscripts</a> (разработчик Justin Wasack) → Загрузить. Нажать <b>Userscripts App Documents</b>, чтобы создалась папка.</span></li>
+        <li><span>Настройки iPhone → Приложения → Safari → Расширения → Userscripts: включить <b>“Использование расширения”</b>, в правах доступа <b>“Другие сайты”</b> - <b>Разрешить</b>.</span></li>
+        <li><span>Зайти на <a href="https://havin8.github.io/dnevnik/" target="_blank" rel="noopener">сайт проекта</a> или <a href="https://github.com/havin8/dnevnik-script/blob/main/dist/dnevnik.user.js" target="_blank" rel="noopener">GitHub</a>, скачать файл Дневника и выбрать папку <b>Userscripts</b>.</span></li>
+        <li><span>Открыть сайт журнала и дать все разрешения.</span></li>
       </ol>
-      <p class="tip">На Android Дневник проверялся меньше, чем на ПК и iPhone.</p></div>
+      <p class="tip">Если открылся старый дизайн - обновить страницу ещё раз.</p></div>
+    <div class="plat glass reveal"><div class="plat-h"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></span><div><b>Компьютер</b><span>Chrome, Edge, Яндекс, Opera</span></div></div>
+      <ol class="steps">
+        <li><span>Скачать файл Дневника с <a href="https://havin8.github.io/dnevnik/" target="_blank" rel="noopener">сайта</a> или <a href="https://github.com/havin8/dnevnik-script/blob/main/dist/dnevnik.user.js" target="_blank" rel="noopener">GitHub</a>.</span></li>
+        <li><span>Поставить расширение <a href="https://chromewebstore.google.com/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=ru" target="_blank" rel="noopener">Tampermonkey</a> из магазина расширений браузера.</span></li>
+        <li><span>Открыть <b>страницу расширений</b> в браузере, включить <b>“Режим разработчика”</b>, а в сведениях о Tampermonkey - <b>“Разрешить пользовательские скрипты”</b>.</span></li>
+        <li><span>Открыть <b>“Панель управления”</b> Tampermonkey → промотать до <b>“Утилиты”</b> → <b>“Импорт из файла”</b> → выбрать скачанный файл Дневника → в окне подтверждения нажать <b>“Установить”</b>.</span></li>
+        <li><span>Открыть сайт журнала.</span></li>
+      </ol>
+      <p class="tip">Tampermonkey ставится один раз - дальше Дневник сам сообщает о новой версии.</p></div>
+    <div class="plat glass reveal"><div class="plat-h"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M9 6h6"/></svg></span><div><b>Android</b><span>Edge, Firefox, Яндекс Браузер, Cromite</span></div><span class="thx">Спасибо Михаилу за помощь</span></div>
+      <ol class="steps">
+        <li><span>Скачать файл Дневника с <a href="https://havin8.github.io/dnevnik/" target="_blank" rel="noopener">сайта</a> или <a href="https://github.com/havin8/dnevnik-script/blob/main/dist/dnevnik.user.js" target="_blank" rel="noopener">GitHub</a>.</span></li>
+        <li><span>Поставить расширение <a href="https://chromewebstore.google.com/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=ru" target="_blank" rel="noopener">Tampermonkey</a>.</span></li>
+        <li><span>В расширениях браузера включить Tampermonkey. В <b>“Управление расширениями”</b> (⋮) включить <b>“Разрешить пользовательские скрипты”</b> и доступ <b>“На всех сайтах”</b>.</span></li>
+        <li><span>Открыть <b>“Панель управления”</b> Tampermonkey → промотать до <b>“Утилиты”</b> → <b>“Импорт из файла”</b> → выбрать скачанный файл Дневника → в окне подтверждения нажать <b>“Установить”</b>.</span></li>
+        <li><span>Открыть сайт журнала.</span></li>
+      </ol>
+      <p class="tip">Chrome на Android расширения не поддерживает, поэтому нужен браузер с расширениями. Проверено в Cromite.</p></div>
   </div>
   <div class="safe2">
     <div class="safe reveal"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span><p><b>Userscripts - безопасное приложение.</b> Распространяется через App Store, где каждое приложение проходит проверку Apple, и у него открытый исходный код.</p></div>
@@ -932,7 +940,7 @@ dialog.lbx button{position:sticky;top:10px;float:right;margin:10px;z-index:2;wid
  $('#blab').innerHTML=H.map(function(h){return '<span>'+h[0]+'</span>'}).join('');
  if(!still&&'IntersectionObserver' in window&&bars.getBoundingClientRect().top>innerHeight){bars.classList.add('pre');new IntersectionObserver(function(es,o){if(es[0].isIntersecting){bars.classList.remove('pre');o.disconnect()}},{threshold:.3}).observe(bars)}
  // до и после
- var cmp=$('#cmp'),cr=$('#cmpr');cr.addEventListener('input',function(){cmp.style.setProperty('--x',cr.value+'%')});
+ var cmp=$('#cmp'),cr=$('#cmpr');if(cmp&&cr)cr.addEventListener('input',function(){cmp.style.setProperty('--x',cr.value+'%')});
  // время суток
  var imgs=$$('#scene img'),btns=$$('[data-sc]'),order=['morning','day','evening','night'],cur=1,timer;
  function show(k){imgs.forEach(function(i){i.classList.toggle('on',i.dataset.k===k)});btns.forEach(function(b){b.setAttribute('aria-pressed',b.dataset.sc===k)});cur=order.indexOf(k)}
