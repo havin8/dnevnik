@@ -155,7 +155,7 @@ figcaption{padding:10px 4px 0;font-size:13px;color:var(--soft)}
 .ba-it .tg{position:absolute;top:-12px;left:18px;z-index:2;padding:5px 13px;border-radius:999px;font:700 11px var(--fb);letter-spacing:.14em;text-transform:uppercase;background:#1b1b1b;border:1.5px solid var(--line);color:var(--ink)}
 .ba-it .tg.r{background:var(--acc);border-color:var(--acc);color:#151008}
 .ba-ar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;color:var(--acc);border:1.5px solid rgba(var(--acc-rgb),.45);background:rgba(var(--acc-rgb),.08)}.ba-ar svg{width:18px;height:18px}
-.cmp{position:relative;border-radius:var(--r-md);overflow:hidden;border:1.5px solid var(--line);aspect-ratio:2000/1371;background:#0a0a0a;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.cmp{position:relative;border-radius:var(--r-md);overflow:hidden;border:1.5px solid var(--line);aspect-ratio:2200/1117;background:#0a0a0a;touch-action:pan-y;user-select:none;-webkit-user-select:none}
 .cmp img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center}
 
 .cmp .a{clip-path:inset(0 calc(100% - var(--x,50%)) 0 0)}
@@ -463,10 +463,10 @@ dialog.lbx button{position:sticky;top:10px;float:right;margin:10px;z-index:2;wid
 </section>
 
 <section class="wrap" id="ba">
-  <div class="sh c reveal"><span class="eb">До и после</span><h2>Те же оценки, другой журнал</h2><p class="lead">Слева - сентябрь в официальном журнале, справа - тот же сентябрь во “Всех парах” Дневника: по неделям и дням, с предметом, номером пары и оценками. Потяни ползунок.</p></div>
+  <div class="sh c reveal"><span class="eb">До и после</span><h2>Те же оценки, другой журнал</h2><p class="lead">Слева - оценки в официальном журнале, справа - те же пары во “Всех парах” Дневника: по дням, с предметом, номером пары и оценками. Потяни ползунок.</p></div>
   <div class="cmp reveal" id="cmp" style="--x:50%">
-    <img class="d" src="ba-dn.webp" width="2000" height="1371" alt="Все пары за сентябрь в Дневнике">
-    <img class="a" src="ba-off.webp" width="2000" height="1371" alt="Оценки за сентябрь в официальном журнале">
+    <img class="d" src="ba-dn.webp" width="2200" height="1117" alt="Все пары за сентябрь в Дневнике">
+    <img class="a" src="ba-off.webp" width="2200" height="1117" alt="Оценки за сентябрь в официальном журнале">
     <span class="tg l">Журнал</span><span class="tg r">Дневник</span>
     <span class="ln"></span><span class="knob"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l-6 6 6 6M15 6l6 6-6 6"/></svg></span>
     <input type="range" id="cmpr" min="0" max="100" value="50" aria-label="Сравнение: журнал и Дневник">
