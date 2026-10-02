@@ -155,16 +155,16 @@ figcaption{padding:10px 4px 0;font-size:13px;color:var(--soft)}
 .ba-it .tg{position:absolute;top:-12px;left:18px;z-index:2;padding:5px 13px;border-radius:999px;font:700 11px var(--fb);letter-spacing:.14em;text-transform:uppercase;background:#1b1b1b;border:1.5px solid var(--line);color:var(--ink)}
 .ba-it .tg.r{background:var(--acc);border-color:var(--acc);color:#151008}
 .ba-ar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;color:var(--acc);border:1.5px solid rgba(var(--acc-rgb),.45);background:rgba(var(--acc-rgb),.08)}.ba-ar svg{width:18px;height:18px}
-.cmp{position:relative;border-radius:var(--r-md);overflow:hidden;border:1.5px solid var(--line);aspect-ratio:1.75/1;background:#0a0a0a;touch-action:pan-y;user-select:none;-webkit-user-select:none}
-.cmp img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:left top}
-.cmp img.d{transform:scale(1.06);transform-origin:left top}
+.cmp{position:relative;border-radius:var(--r-md);overflow:hidden;border:1.5px solid var(--line);aspect-ratio:1568/780;background:#0a0a0a;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.cmp img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center}
+
 .cmp .a{clip-path:inset(0 calc(100% - var(--x,50%)) 0 0)}
 .cmp .ln{position:absolute;top:0;bottom:0;left:var(--x,50%);width:2px;margin-left:-1px;background:var(--acc);box-shadow:0 0 18px var(--acc)}
 .cmp .knob{position:absolute;top:50%;left:var(--x,50%);width:48px;height:48px;margin:-24px 0 0 -24px;border-radius:50%;background:var(--acc-d);color:#fff;display:grid;place-items:center;box-shadow:0 8px 24px rgba(0,0,0,.5);pointer-events:none}
 .cmp .tg{position:absolute;top:14px;padding:4px 12px;border-radius:999px;font:700 11px var(--fb);letter-spacing:.14em;text-transform:uppercase;background:rgba(0,0,0,.75);color:var(--ink)}
 .cmp .tg.l{left:14px}.cmp .tg.r{right:14px;background:var(--acc);color:#151008}
 .cmp input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0}
-@media (max-width:620px){.cmp{aspect-ratio:1.2/1}}
+
 
 /* разделы */
 .tourbox{padding:clamp(18px,3vw,40px);border-radius:36px;border-color:#2e2e2e;box-shadow:0 40px 100px -50px rgba(var(--acc-rgb),.35)}
@@ -464,11 +464,13 @@ dialog.lbx button{position:sticky;top:10px;float:right;margin:10px;z-index:2;wid
 </section>
 
 <section class="wrap" id="ba">
-  <div class="sh c reveal"><span class="eb">До и после</span><h2>Те же оценки, другой журнал</h2><p class="lead">Сверху - сентябрь в официальном журнале, снизу - тот же сентябрь во “Всех парах” Дневника. Пары разложены по неделям и дням, у каждой видно предмет, номер пары и оценки.</p></div>
-  <div class="ba2">
-    <div class="ba-it reveal"><span class="tg">Журнал</span><figure class="shot"><div class="bar"><i></i><i></i><i></i><span>journal.top-academy.ru</span></div><div class="vp"><img src="ba-off.webp" width="1568" height="363" alt="Оценки за сентябрь в официальном журнале" decoding="async"></div></figure></div>
-    <div class="ba-ar reveal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v15M6 13l6 6 6-6"/></svg></div>
-    <div class="ba-it reveal"><span class="tg r">Дневник</span><figure class="shot"><div class="bar"><i></i><i></i><i></i><span>journal.top-academy.ru</span></div><div class="vp"><img src="ba-dn.webp" width="1568" height="780" alt="Все пары за сентябрь в Дневнике" decoding="async"></div></figure></div>
+  <div class="sh c reveal"><span class="eb">До и после</span><h2>Те же оценки, другой журнал</h2><p class="lead">Слева - сентябрь в официальном журнале, справа - тот же сентябрь во “Всех парах” Дневника: по неделям и дням, с предметом, номером пары и оценками. Потяни ползунок.</p></div>
+  <div class="cmp reveal" id="cmp" style="--x:50%">
+    <img class="d" src="ba-dn.webp" width="1568" height="780" alt="Все пары за сентябрь в Дневнике">
+    <img class="a" src="ba-off.webp" width="1568" height="780" alt="Оценки за сентябрь в официальном журнале">
+    <span class="tg l">Журнал</span><span class="tg r">Дневник</span>
+    <span class="ln"></span><span class="knob"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l-6 6 6 6M15 6l6 6-6 6"/></svg></span>
+    <input type="range" id="cmpr" min="0" max="100" value="50" aria-label="Сравнение: журнал и Дневник">
   </div>
 </section>
 
@@ -502,7 +504,7 @@ dialog.lbx button{position:sticky;top:10px;float:right;margin:10px;z-index:2;wid
     <div class="sub"><h3>Уведомления</h3><p>Появляются над приветствием, когда есть повод, и закрываются крестиком.</p></div>
     <div class="bare"><img src="notes.webp" width="2152" height="772" alt="Уведомления на главной" decoding="async"></div>
     <div class="sub"><h3>Карточки главной</h3><p>Задания, рейтинг группы и последние начисления. Новое - с меткой.</p></div>
-    <div class="trio"><div class="bare"><img src="hw-widget.webp" width="876" height="1114" alt="Карточка домашних заданий" fetchpriority="low" decoding="async"></div><div class="bare"><img src="lb.webp" width="1050" height="1158" alt="Таблица лидеров" fetchpriority="low" decoding="async"></div><div class="bare"><img src="feed.webp" width="1050" height="1158" alt="Последние начисления" fetchpriority="low" decoding="async"></div></div>
+    <div class="trio"><div class="bare"><img src="hw-widget.webp" width="876" height="1114" alt="Карточка домашних заданий" decoding="async"></div><div class="bare"><img src="lb.webp" width="1050" height="1158" alt="Таблица лидеров" decoding="async"></div><div class="bare"><img src="feed.webp" width="1050" height="1158" alt="Последние начисления" decoding="async"></div></div>
     <div class="panel glass">
       <div class="txt"><span class="eb">Окно журнала в стиле Дневника</span><h3>Оценка занятия</h3><p>Анкета журнала открывается прямо в Дневнике: та же шкала и те же отметки, что на сайте журнала.</p>
         <div class="facts"><div><b>+1 топкоин</b>за каждую пару</div><div><b>5 звёзд</b>если не выбрать</div><div><b>Анонимно</b>преподаватель не видит</div><div><b>Подряд</b>следующая пара сразу</div></div></div>
@@ -741,9 +743,10 @@ dialog.lbx button{position:sticky;top:10px;float:right;margin:10px;z-index:2;wid
         <li><span>Переустановить скрипт и обновить сайт журнала.</span></li>
       </ol></div>
       <div><b>Компьютер и Android</b><ol class="steps">
-        <li><span>Tampermonkey → <b>Утилиты</b> → <b>“Проверить обновления скриптов”</b>.</span></li>
+        <li><span>Нажать <b>“Обновить”</b> → <b>“Подтвердить”</b>.</span></li>
+        <li><span>Если не сработало: Tampermonkey → <b>Утилиты</b> → <b>“Проверить обновления скриптов”</b>.</span></li>
         <li><span>Обновить сайт журнала.</span></li>
-      </ol><div class="bare"><img src="tm-upd.webp" width="552" height="90" alt="Меню Tampermonkey: Утилиты, Проверить обновления скриптов" fetchpriority="low" decoding="async"></div></div>
+      </ol></div>
     </div>
     <p class="tip">Если что-то сломалось на iPhone: открой папку Userscripts в “Файлах”. Если там два файла Дневника - удали старый (обычно второй). Версия видна, если нажать на файл.</p>
   </div>
