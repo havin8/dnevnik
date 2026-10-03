@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Дневник - новый дизайн журнала
 // @namespace    dnevnik.artem
-// @version      4.4.9
+// @version      4.5.0
 // @description  Полноценный дизайн "Дневника" поверх журнала: свои страницы, живые данные из журнала, мгновенная загрузка из кэша.
 // @match        https://journal.top-academy.ru/*
 // @run-at       document-start
@@ -89,7 +89,7 @@
       const v = i && i.script && i.script.version;
       if (v && /^\d+(\.\d+)*$/.test(v)) return v;
     } catch (e) {}
-    return "4.4.9";
+    return "4.5.0";
   })();
 
   /* ======================= настройки и хранилище ======================= */
@@ -160,6 +160,12 @@
     LS.get("cfg", {}),
   );
   const saveCfg = () => LS.set("cfg", cfg);
+  // 4.5.0: значки валюты как в журнале стали видом по умолчанию - один раз переключаем всех, пиксельный можно вернуть в Настройках
+  if (!LS.get("mc50", 0)) {
+    cfg.mc = false;
+    saveCfg();
+    LS.set("mc50", 1);
+  }
   cfg.raise = true;
   // Safari (Userscripts): хранилище расширения асинхронное - восстанавливаем и перерисовываем
   if (
@@ -737,6 +743,8 @@ send("ready",{});
   /* ======================= новая версия Дневника ======================= */
   // что нового в текущей версии - показывается в Настройках
   const CHANGES = [
+    "Топкоины и топгемы - значками как в журнале",
+    "iPad и iPhone: нажатия больше не сползают на соседние кнопки и пункты меню",
     "Итоги месяца: только завершённый месяц - текущий появится в последние 3 дня",
     "Настройки: графика - авто, полная или лёгкая для слабых устройств",
     "Безопасность: запросы с ключом входа уходят только на серверы журнала",
@@ -4673,6 +4681,8 @@ dialog[open]{animation:dnin .2s ease}
 :host([data-lite]) .dn.neo .top{background:#080808}
 :host([data-lite]) .dn .hero.nh *,:host([data-lite]) .dn .bd-conf *{animation:none!important}
 :host([data-lite]) .dn dialog::backdrop{background:rgba(0,0,0,.82)}
+.dn:not([data-mc=true]) .coin,.dn:not([data-mc=true]) .gem{border-radius:0;box-shadow:none;clip-path:none;background:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI1MCIgZmlsbD0iI0ZGQjU0NyIvPjxjaXJjbGUgY3g9IjUwIiBjeT0iNTAiIHI9IjM5IiBmaWxsPSIjRkY5NTAwIi8+PGcgZmlsbD0iI0ZGQzQ2QiI+PHBhdGggZD0iTTQyIDIyaDE0djM1YzAgNCAyIDYgNiA2aDZ2MTJoLTljLTExIDAtMTctNi0xNy0xN3oiLz48cmVjdCB4PSIzMiIgeT0iMzYiIHdpZHRoPSIzNCIgaGVpZ2h0PSIxMiIgcng9IjQiLz48L2c+PC9zdmc+) center/contain no-repeat}
+.dn:not([data-mc=true]) .gem{background-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI1MCIgZmlsbD0iIzBCM0YwQiIvPjxjaXJjbGUgY3g9IjUwIiBjeT0iNTAiIHI9IjQyIiBmaWxsPSIjMkE3QTAwIi8+PHBvbHlnb24gcG9pbnRzPSI1MC4wLDI5LjAgNTAuMCw4LjAgODIuOCwyMy44IDY2LjQsMzYuOSIgZmlsbD0iIzdDQzgwMCIvPjxwb2x5Z29uIHBvaW50cz0iNjYuNCwzNi45IDgyLjgsMjMuOCA5MC45LDU5LjMgNzAuNSw1NC43IiBmaWxsPSIjNUVBRDAwIi8+PHBvbHlnb24gcG9pbnRzPSI3MC41LDU0LjcgOTAuOSw1OS4zIDY4LjIsODcuOCA1OS4xLDY4LjkiIGZpbGw9IiMzRTkyMDAiLz48cG9seWdvbiBwb2ludHM9IjU5LjEsNjguOSA2OC4yLDg3LjggMzEuOCw4Ny44IDQwLjksNjguOSIgZmlsbD0iIzJBN0EwMCIvPjxwb2x5Z29uIHBvaW50cz0iNDAuOSw2OC45IDMxLjgsODcuOCA5LjEsNTkuMyAyOS41LDU0LjciIGZpbGw9IiMxRjZCMDAiLz48cG9seWdvbiBwb2ludHM9IjI5LjUsNTQuNyA5LjEsNTkuMyAxNy4yLDIzLjggMzMuNiwzNi45IiBmaWxsPSIjM0U5MjAwIi8+PHBvbHlnb24gcG9pbnRzPSIzMy42LDM2LjkgMTcuMiwyMy44IDUwLjAsOC4wIDUwLjAsMjkuMCIgZmlsbD0iIzZCQkEwMCIvPjxwb2x5Z29uIHBvaW50cz0iNTAuMCwyOS4wIDY2LjQsMzYuOSA3MC41LDU0LjcgNTkuMSw2OC45IDQwLjksNjguOSAyOS41LDU0LjcgMzMuNiwzNi45IiBmaWxsPSIjOTRFMDAwIi8+PC9zdmc+)}
 `;
   const IC = {
     home: '<path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
@@ -6238,6 +6248,16 @@ dialog[open]{animation:dnin .2s ease}
         im.src = m[1];
         curImg[k] = im;
       }
+      const j = DN_CSS.match(
+        k === "coin"
+          ? /\.dn:not\(\[data-mc=true\]\) \.coin,[^{]*\{[^}]*url\((data:image\/svg\+xml;base64,[^)]+)\)/
+          : /\.dn:not\(\[data-mc=true\]\) \.gem\{background-image:url\((data:image\/svg\+xml;base64,[^)]+)\)/,
+      );
+      if (j) {
+        const im = new Image();
+        im.src = j[1];
+        curImg["j" + k] = im;
+      }
     });
   }
   function curIcon(g, k, x, y, sz) {
@@ -6246,6 +6266,11 @@ dialog[open]{animation:dnin .2s ease}
       g.imageSmoothingEnabled = false;
       g.drawImage(im, x, y, sz, sz);
       g.imageSmoothingEnabled = true;
+      return;
+    }
+    const jm = curImg["j" + k];
+    if (!cfg.mc && jm && jm.complete && jm.naturalWidth) {
+      g.drawImage(jm, x, y, sz, sz);
       return;
     }
     if (k === "coin") {
@@ -10919,7 +10944,17 @@ dialog[open]{animation:dnin .2s ease}
     try {
       const bg = document.createElement("style");
       bg.id = "dn-bg";
-      bg.textContent = "html.dn-on,html.dn-on body{background:#000!important;color-scheme:dark}";
+      bg.textContent =
+        "html.dn-on,html.dn-on body{background:#000!important;color-scheme:dark}html.dn-on:not(.dn-raise-open),html.dn-on:not(.dn-raise-open) body{overflow:hidden!important;overscroll-behavior:none!important;height:100%!important}";
+      if (W.visualViewport)
+        W.visualViewport.addEventListener("scroll", () => {
+          if (
+            host &&
+            document.documentElement.classList.contains("dn-on") &&
+            (W.scrollY || W.scrollX || W.visualViewport.offsetTop)
+          )
+            W.scrollTo(0, 0);
+        });
       (document.head || document.documentElement).appendChild(bg);
       const tc = () => {
         if (!document.head) return setTimeout(tc, 100);
