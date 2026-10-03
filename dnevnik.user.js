@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Дневник - новый дизайн журнала
 // @namespace    dnevnik.artem
-// @version      4.4.7
+// @version      4.4.9
 // @description  Полноценный дизайн "Дневника" поверх журнала: свои страницы, живые данные из журнала, мгновенная загрузка из кэша.
 // @match        https://journal.top-academy.ru/*
 // @run-at       document-start
@@ -89,7 +89,7 @@
       const v = i && i.script && i.script.version;
       if (v && /^\d+(\.\d+)*$/.test(v)) return v;
     } catch (e) {}
-    return "4.4.7";
+    return "4.4.9";
   })();
 
   /* ======================= настройки и хранилище ======================= */
@@ -145,7 +145,18 @@
     });
   if (typeof GM_getValue === "function") restoreKept((k) => GM_getValue(k, null));
   const cfg = Object.assign(
-    { on: true, theme: "dark", accent: "gold", mc: false, hidden: [], raise: true, mkt: false, gpv: "week" },
+    {
+      on: true,
+      theme: "dark",
+      accent: "gold",
+      mc: false,
+      hidden: [],
+      raise: true,
+      mkt: false,
+      gpv: "week",
+      goals: true,
+      gfx: "auto",
+    },
     LS.get("cfg", {}),
   );
   const saveCfg = () => LS.set("cfg", cfg);
@@ -726,6 +737,12 @@ send("ready",{});
   /* ======================= новая версия Дневника ======================= */
   // что нового в текущей версии - показывается в Настройках
   const CHANGES = [
+    "Итоги месяца: только завершённый месяц - текущий появится в последние 3 дня",
+    "Настройки: графика - авто, полная или лёгкая для слабых устройств",
+    "Безопасность: запросы с ключом входа уходят только на серверы журнала",
+    "Если журнал поменяет вёрстку и Дневник не запустится - откроется обычный журнал с кнопкой Дневника",
+    "Главная: под ближайшим учебным днём показан следующий за ним день, а не тот же",
+    "Настройки: цели по баллу и посещаемости можно скрыть",
     "Средние показатели: вернулся прежний вид графика",
     "Все пары: при открытии всегда текущая неделя и её итог",
     "Меню: двузначные счётчики больше не обрезаются",
@@ -1687,7 +1704,16 @@ send("ready",{});
     }
   }
   // Запрос в обход ограничений браузера (CORS): через Tampermonkey, иначе обычный fetch
+  const journalHost = (u) => {
+    try {
+      const x = new URL(String(u));
+      return x.protocol === "https:" && /(^|\.)top-academy\.ru$/i.test(x.hostname);
+    } catch (e) {
+      return false;
+    }
+  };
   function request(url, headers) {
+    if (!journalHost(url)) return Promise.reject(new Error("адрес не журнала"));
     if (NET.pageReady && typeof pageRequest === "function" && NET.mode !== "gm-only") {
       NET.mode = "page";
       return pageRequest(url, headers);
@@ -4642,6 +4668,11 @@ dialog[open]{animation:dnin .2s ease}
 .dn.neo article.hw .top2 b{display:inline}
 .dn.neo article.hw .top2 .newtag{margin:0 0 0 6px;vertical-align:2px}
 @media (min-width:981px){.dn.neo .side{padding-inline:14px}.dn.neo .nav a{padding-inline:10px;gap:10px}}
+:host([data-lite]) .dn *,:host([data-lite]) .dn *::before,:host([data-lite]) .dn *::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+:host([data-lite]) .dn.neo :is(.card,.gridwrap,.now,article.hw,.aday){background-color:#121212}
+:host([data-lite]) .dn.neo .top{background:#080808}
+:host([data-lite]) .dn .hero.nh *,:host([data-lite]) .dn .bd-conf *{animation:none!important}
+:host([data-lite]) .dn dialog::backdrop{background:rgba(0,0,0,.82)}
 `;
   const IC = {
     home: '<path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
@@ -4835,7 +4866,8 @@ dialog[open]{animation:dnin .2s ease}
     return null;
   }
   async function cacheAva(url, id) {
-    const full = url.startsWith("/") ? location.origin + url : url;
+    const full = safeUrl(url.startsWith("/") ? location.origin + url : url);
+    if (!/^https:/.test(full)) return;
     const draw = (src) =>
       new Promise((res, rej) => {
         const im = new Image();
@@ -5129,6 +5161,43 @@ dialog[open]{animation:dnin .2s ease}
       setTimeout(() => v.remove(), 260);
     }
   }
+  // графика: «полная» - стекло и анимации, «лёгкая» - без размытия и фоновых анимаций; «авто» включает лёгкую, если при прокрутке кадры заметно проседают
+  const gfxLite = () => cfg.gfx === "lite" || (cfg.gfx !== "full" && LS.get("gfxauto", 0) === 1);
+  function applyGfx() {
+    if (host) {
+      if (gfxLite()) host.setAttribute("data-lite", "");
+      else host.removeAttribute("data-lite");
+    }
+  }
+  let fpsBad = 0,
+    fpsRun = false,
+    fpsN = 0;
+  function fpsProbe() {
+    if (fpsRun || cfg.gfx !== "auto" || LS.get("gfxauto", 0) === 1 || fpsN >= 6 || document.hidden) return;
+    fpsRun = true;
+    fpsN++;
+    const T = [];
+    let last = 0,
+      k = 0;
+    const tick = (t) => {
+      if (last) T.push(t - last);
+      last = t;
+      if (++k < 45) requestAnimationFrame(tick);
+      else done();
+    };
+    const done = () => {
+      fpsRun = false;
+      T.sort((a, b) => a - b);
+      const med = T[T.length >> 1] || 16;
+      if (med > 30) fpsBad++;
+      else fpsBad = Math.max(0, fpsBad - 1);
+      if (fpsBad >= 2) {
+        LS.set("gfxauto", 1);
+        applyGfx();
+      }
+    };
+    requestAnimationFrame(tick);
+  }
   function mount() {
     dropVeil();
     if (host) return;
@@ -5144,9 +5213,17 @@ dialog[open]{animation:dnin .2s ease}
     }
     host = document.createElement("div");
     host.id = "dn-app";
+    applyGfx();
     host.style.cssText =
       "position:fixed;inset:0;z-index:2147483000;overflow:auto;overscroll-behavior:contain;background:#0a0c10";
     R = host.attachShadow({ mode: "open" });
+    host.addEventListener(
+      "scroll",
+      () => {
+        if (!fpsRun) setTimeout(fpsProbe, 0);
+      },
+      { passive: true },
+    );
     R.innerHTML = `<style>${DN_CSS}</style><div class="dn" data-theme="${resolveTheme()}"><div class="app">
       <aside class="side"><div class="brand"><div class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" aria-hidden="true"><rect x="4.5" y="3" width="15" height="18" rx="4"/><path d="M8.5 7.8h3.5M8.5 11.6h7M8.5 15.4h7"/></svg></div><div><b>Дневник</b><span id="grp"></span></div></div><nav class="nav" id="nav"></nav>
         <button class="classic" data-act="classic">${ic("ext")}<span>Классический журнал</span></button>
@@ -5623,13 +5700,24 @@ dialog[open]{animation:dnin .2s ease}
     if (!a.ls.length) return "";
     if (!isT) {
       // сегодня пары уже закончились (или их не было), карточка показывает ближайший учебный день
-      const t = sum(today),
-        when =
-          dayDiff(new Date(), fromIso(day)) === 1
-            ? "Завтра"
-            : DAYS[(fromIso(day).getDay() + 6) % 7] + ", " + longDate(fromIso(day));
+      const t = sum(today);
       return `<div class="dfoot">${t.ls.length ? box("check", `Сегодня ${pairsW(t.ls.length)} прошли`, `${esc(t.ls[0].start)} - ${esc(t.ls[t.ls.length - 1].end)} · ${f1(t.mins / 60).replace(",0", "")} ч занятий`) : box("check", "Сегодня пар не было", "выходной или свободный день")}
-        ${box("cal", `${when} · ${pairsW(a.ls.length)}`, `с ${esc(a.ls[0].start)} до ${esc(a.ls[a.ls.length - 1].end)} · ${subjs(a.ls)}`, true)}</div>`;
+        ${(() => {
+          let n2 = null;
+          for (let k = 1; k <= 14 && !n2; k++) {
+            const d = dayDate(fromIso(day), k);
+            if (lessonsOn(d).length) n2 = d;
+          }
+          if (!n2) return "";
+          const b = sum(iso(n2)),
+            w2 = dayDiff(new Date(), n2) === 1 ? "Завтра" : DAYS[(n2.getDay() + 6) % 7] + ", " + longDate(n2);
+          return box(
+            "cal",
+            `${w2} · ${pairsW(b.ls.length)}`,
+            `с ${esc(b.ls[0].start)} до ${esc(b.ls[b.ls.length - 1].end)} · ${subjs(b.ls)}`,
+            true,
+          );
+        })()}</div>`;
     }
     let nd = null;
     for (let k = 1; k <= 14 && !nd; k++) {
@@ -6057,6 +6145,12 @@ dialog[open]{animation:dnin .2s ease}
   function monthsWithData() {
     return [...new Set((M.visits || []).map((v) => v.date && v.date.slice(0, 7)).filter(Boolean))].sort();
   }
+  function summaryMonths() {
+    const now = new Date(),
+      cur = iso(now).slice(0, 7),
+      dim = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+    return monthsWithData().filter((m) => m < cur || (m === cur && now.getDate() > dim - 3));
+  }
   function summaryDue() {
     const now = new Date(),
       cur = iso(now).slice(0, 7),
@@ -6070,8 +6164,12 @@ dialog[open]{animation:dnin .2s ease}
     try {
       preCur();
     } catch (e) {}
-    const all = monthsWithData();
-    ym = ym || all[all.length - 1];
+    const all = summaryMonths();
+    if (!all.length) {
+      toast("Итоги появятся, когда закончится первый месяц");
+      return;
+    }
+    ym = ym && all.includes(ym) ? ym : all[all.length - 1];
     const st = monthStats(ym);
     if (!st) {
       toast("За этот месяц данных пока нет");
@@ -6584,7 +6682,7 @@ dialog[open]{animation:dnin .2s ease}
       cal += `<div class="c ${ls.length ? "has" : ""} ${any ? "part" : ""} ${lateD ? "lt" : ""} ${!ls.length && dt > now ? "fut" : ""}" title="${n ? pairsW(n) + (ls.length < n ? ` · отмечено ${ls.length}` : "") + (any ? ", есть пропуски" : "") + (lateD ? ", опоздание" : "") : ""}"><span class="num">${d}</span><span class="bars">${bars}</span></div>`;
     }
     return `
-    ${monthsWithData().length ? `<div class="card hint">${ic("star")}<div><b>Итоги месяца</b><span>Оценки, посещаемость, серии и календарь - за каждый месяц</span></div><button class="m-btn pri" data-act="month">Открыть</button></div>` : ""}
+    ${summaryMonths().length ? `<div class="card hint">${ic("star")}<div><b>Итоги месяца</b><span>Оценки, посещаемость, серии и календарь - за каждый месяц</span></div><button class="m-btn pri" data-act="month">Открыть</button></div>` : ""}
     <div class="row r4">
       <div class="card kpi"><div class="lab">${ic("star")}Средний балл</div><div class="val num">${s.marks ? f2(s.avg) : "-"}</div><div class="sub">${s.allTop ? `все <b class="num">${s.marks}</b> оценок - «${s.maxMark}»` : `по <b class="num">${s.marks}</b> оценкам`}</div></div>
       <div class="card kpi"><div class="lab">${ic("hw")}За домашние</div><div class="val num">${s.hwN}</div><div class="sub">оценок за ДЗ</div></div>
@@ -6601,7 +6699,7 @@ dialog[open]{animation:dnin .2s ease}
       }</div></div>
       <div class="card kpi"><div class="lab">${ic("check")}Пропуски</div><div class="val num">${s.miss}<small>из ${s.total}</small></div><div class="sub">${s.late ? `опозданий <b class="num">${s.late}</b>` : "опозданий нет"}</div></div>
     </div>
-    <div class="row r2 goals">${goalHTML()}${attGoalHTML()}</div>
+    ${cfg.goals === false ? "" : `<div class="row r2 goals">${goalHTML()}${attGoalHTML()}</div>`}
     ${pairsHTML(V, keys)}
     <div class="row r2 calrow">
       <div class="card calc"><div class="hd"><h2>${MONN[mo]} по дням</h2>${calYms.length > 1 ? `<div class="calnav"><button class="hc-ar" data-calm="-1" ${ci <= 0 ? "disabled" : ""} aria-label="Предыдущий месяц">‹</button><button class="hc-ar" data-calm="1" ${ci >= calYms.length - 1 ? "disabled" : ""} aria-label="Следующий месяц">›</button></div>` : ""}</div><div class="cal">${cal}</div><div class="legend"><span><i style="background:var(--good)"></i>Все пары</span><span><i style="background:var(--late)"></i>Опоздание</span><span><i style="background:var(--bad)"></i>Пропуск</span><span><i style="background:#4a4a52"></i>Нет отметки / впереди</span></div></div>
@@ -7512,6 +7610,8 @@ dialog[open]{animation:dnin .2s ease}
         .join("")}</div></section>
     <div class="row r2">
       <section class="card"><div class="hd"><h2>Внешний вид</h2></div>
+        <div class="set-row"><span>Графика<button class="tipb" data-tip="Полная - стекло, размытие и анимации.&#10;Лёгкая - без размытия и фоновых анимаций, для слабых телефонов и ноутбуков.&#10;Авто - сама включает лёгкую, если прокрутка начинает тормозить${cfg.gfx === "auto" && LS.get("gfxauto", 0) === 1 ? " (сейчас включена лёгкая)" : ""}" aria-label="Что это">i</button></span><div class="pill">${opt("gfx", "auto", "Авто")}${opt("gfx", "full", "Полная")}${opt("gfx", "lite", "Лёгкая")}</div></div>
+        <div class="set-row"><span>Цели в «Оценках»<button class="tipb" data-tip="Карточки «Цель по баллу» и «Цель по посещаемости» в разделе «Оценки».&#10;Выключены - карточки скрыты, сами цели сохраняются" aria-label="Что это">i</button></span><div class="pill">${opt("goals", true, "Показывать")}${opt("goals", false, "Скрыть")}</div></div>
         <div class="set-row"><span>Все пары в «Оценках»</span><div class="pill">${opt("gpv", "week", "По неделям")}${opt("gpv", "month", "Весь месяц")}</div></div>
         <div class="set-row"><span>Цвет акцента</span><div class="acc-row">${ACCENTS.map(([k, n, c]) => `<button class="acc" data-set="accent" data-v="${k}" aria-pressed="${(cfg.accent || "gold") === k}" title="${n}" style="--c:${c}"><i></i><span>${n}</span></button>`).join("")}</div></div>
         <div class="set-row"><span>Валюта<button class="tipb" data-tip="«Пиксельная» валюта: топкоины показываются как слитки золота, топгемы - как изумруды.&#10;На сам журнал это не влияет" aria-label="Что это">i</button></span><div class="pill">${opt("mc", false, "Как в журнале")}${opt("mc", true, "Пиксельная")}</div></div>
@@ -9384,6 +9484,12 @@ dialog[open]{animation:dnin .2s ease}
       if (v === "false") v = false;
       cfg[t.dataset.set] = v;
       saveCfg();
+      if (t.dataset.set === "gfx") {
+        if (v !== "lite") LS.set("gfxauto", 0);
+        fpsBad = 0;
+        fpsN = 0;
+        applyGfx();
+      }
       if (CRYPTO && t.dataset.set === "mkt") (v ? mkStart : mkStop)();
       applyRaise();
       host.style.background = resolveTheme() === "dark" ? "#0a0c10" : "#eff0f3";
@@ -10912,7 +11018,19 @@ dialog[open]{animation:dnin .2s ease}
       showFab();
       return;
     }
-    mount();
+    try {
+      mount();
+    } catch (e) {
+      NET.viewErr = "запуск: " + String((e && e.message) || e).slice(0, 160);
+      try {
+        if (host) host.remove();
+      } catch (x) {}
+      host = null;
+      R = null;
+      document.documentElement.classList.remove("dn-on");
+      showFab();
+      return;
+    }
     const dd = () => {
       if (ddosCheck()) return;
       setTimeout(ddosCheck, 1500);

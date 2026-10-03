@@ -89,7 +89,7 @@ section{padding-block:var(--gap) 0}
 .story{max-width:720px;margin:28px auto 0;display:flex;flex-direction:column;gap:14px;text-align:center}
 .story p{color:var(--ink2);font-size:clamp(16px,1.5vw,18px);line-height:1.7;text-wrap:pretty}
 .story p b{color:var(--acc);font-weight:700}
-.story em.y{font-style:normal;color:var(--acc);font-weight:700}
+.story b{color:var(--ink);font-weight:700}.story em.y{font-style:normal;color:var(--acc);font-weight:700}
 .gif{margin:6px auto;width:min(360px,100%);display:flex;flex-direction:column;align-items:center;gap:8px}
 .gif video{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:22px;border:1.5px solid #2c2c2c;box-shadow:0 24px 60px -24px rgba(var(--acc-rgb),.55);transform:rotate(-1.5deg)}
 .gif figcaption{padding:0;font-size:12.5px;color:var(--soft);font-style:italic}
@@ -438,19 +438,19 @@ dialog.lbx button{position:sticky;top:10px;float:right;margin:10px;z-index:2;wid
   <blockquote id="quote">Архитектор не обязан сам тесать камни для своего <em>здания</em>.</blockquote>
   <cite><span><b>Иммануил Кант</b> · “Критика чистого разума”, 1781</span></cite>
   <div class="story">
-    <p>Всё началось в первые дни учёбы. Я открыл сайт журнала - и сразу захотелось что-то в нём поменять. Я всегда любил красивые сайты и хотел, чтобы у моего университета был журнал, с которого другие брали бы <b>референсы и идеи</b>.</p>
+    <p>Всё началось в первые дни учёбы. Я открыл наш журнал и сразу понял: <b>с ним надо что-то делать</b>. Я всегда любил продуманные сайты и хотел, чтобы у нашего университета был журнал, в который <em class="y">хочется</em> заходить. Сначала - просто для себя, чтобы не ломать глаза.</p>
     <figure class="gif"><video autoplay muted loop playsinline preload="auto" aria-label="Обезьяна яростно печатает на ноутбуке"><source src="monkey.webm" type="video/webm"><source src="monkey.mp4" type="video/mp4"></video><figcaption>примерно так выглядела эта неделя</figcaption></figure>
-    <p>Опыта в программировании и дизайне у меня пока немного, поэтому пришлось выкручиваться с помощью “зрелой технологии на пике эволюции”, так называемого <b>AI</b>: я ставлю задачи, проверяю каждый экран и раз за разом отправляю на доработку, <em class="y">которая по ощущениям длится вечно</em>. Если честно, вайбкодинг оказался гораздо сложнее, чем я представлял, <em class="y">но</em> за неделю упорной работы и тестов получился результат, на который у команды профессионалов раньше ушло бы гораздо больше времени.</p>
+    <p>Опыта в коде у меня немного, поэтому пришлось использовать “древнее зло” на пике эволюции - <em class="y">AI</em>. План был простой: я пишу задачу, Claude выдаёт идеальный код, <b>один вечер</b> - и готово! Ну... <em class="y">не совсем</em>. На деле я проверял <b>каждый пиксель</b> на разных устройствах и раз за разом отправлял на доработку. Однако за <b>неделю упорной работы и тестов</b> получился довольно хороший результат, на который у команды профессионалов раньше ушло бы <em class="y">несколько месяцев</em>.</p>
   </div>
 </section>
 
 <section class="hero wrap" id="hero">
   <h1>Дневник</h1>
-  <div class="beta"><i>Бета</i>версия 4.4.7</div>
+  <div class="beta"><i>Бета</i>версия 4.4.9</div>
   <p class="lead">Новый интерфейс для электронного журнала Top Academy: оценки, расписание и задания в одном тёмном окне, на ПК и iPhone.</p>
   <div class="cta"><a class="pill pri" href="#tour">Смотреть разделы</a><a class="pill" href="#install">Как установить</a></div>
   <div class="kpis glass" id="kpis">
-    <div><b class="num" data-to="77">77</b><span>версий,<br>от 2.0.0 до 4.4.7</span></div>
+    <div><b class="num" data-to="79">79</b><span>версий,<br>от 2.0.0 до 4.4.9</span></div>
     <div><b class="num" data-to="6">6</b><span>дней,<br>27.09 - 02.10</span></div>
     <div><b class="num">≈<span data-to="28">28</span>&nbsp;ч</b><span>активной<br>работы</span></div>
     <div><b class="num">≈<span data-to="11">11</span>&nbsp;000</b><span>строк кода<br>и стилей</span></div>
@@ -800,7 +800,7 @@ dialog.lbx button{position:sticky;top:10px;float:right;margin:10px;z-index:2;wid
     <div class="ev reveal"><div><span class="v">4.1</span><span class="d">30.09</span></div><div><h3>Крипта и палитра</h3><p>Крипта, пастельная палитра, спокойный календарь, все пары по месяцам и неделям с листанием пальцем.</p></div></div>
     <div class="ev reveal"><div><span class="v">4.3</span><span class="d">01.10 · ночь</span></div><div><h3>Новый стиль</h3><p>Тёмное стекло по концепту. Пять заходов за ночь, пока цвета не совпали с концептом по пипетке. Светлая тема убрана.</p></div></div>
     <div class="ev reveal"><div><span class="v">4.4</span><span class="d">01 - 02.10</span></div><div><h3>Полировка</h3><p>Месячный вид пар, итог дня на главной, выход без автовхода, настройки в хранилище расширения, вёрстка на телефоне.</p></div></div>
-    <div class="ev big reveal"><div><span class="v">4.4.7</span><span class="d">сейчас</span></div><div><h3>Бета <small class="b">текущая</small></h3><p>Уведомления в две колонки, метка “новое” справа от названия, все пары открываются на текущей неделе, счётчики в меню не обрезаются.</p></div></div>
+    <div class="ev big reveal"><div><span class="v">4.4.9</span><span class="d">сейчас</span></div><div><h3>Бета <small class="b">текущая</small></h3><p>Уведомления в две колонки, метка “новое” справа от названия, все пары открываются на текущей неделе, счётчики в меню не обрезаются.</p></div></div>
   </div>
   <div class="evo reveal">
     <figure><div class="bare"><img src="old-42.webp" width="1440" height="1624" alt="Дневник 4.2" fetchpriority="low" decoding="async"></div><figcaption>4.2 - прежний стиль: светлее, плотные карточки.</figcaption></figure>
@@ -860,8 +860,8 @@ dialog.lbx button{position:sticky;top:10px;float:right;margin:10px;z-index:2;wid
 <section class="wrap" id="numbers">
   <div class="sh c reveal"><span class="eb">Цифры</span><h2>Сколько это заняло</h2></div>
   <div class="stats">
-    <div class="stat glass reveal"><b class="num">77</b><span>версий: от 2.0.0 до 4.4.7</span></div>
-    <div class="stat glass reveal"><b class="num">66</b><span>пакетов правок кода, каждый с проверкой</span></div>
+    <div class="stat glass reveal"><b class="num">79</b><span>версий: от 2.0.0 до 4.4.9</span></div>
+    <div class="stat glass reveal"><b class="num">68</b><span>пакетов правок кода, каждый с проверкой</span></div>
     <div class="stat glass reveal"><b class="num">215</b><span>скриншотов отправил автор: баги, идеи, сравнения</span></div>
     <div class="stat glass reveal"><b class="num">≈100</b><span>скриптов автотестов в браузере</span></div>
     <div class="stat glass reveal"><b class="num">≈11 000</b><span>строк кода и стилей в читаемом виде</span></div>
@@ -904,7 +904,7 @@ dialog.lbx button{position:sticky;top:10px;float:right;margin:10px;z-index:2;wid
   </div>
 </section>
 
-<footer><div class="wrap">Дневник 4.4.7 · Баранов Артём, ПИ-265 · 2026 · Неофициальный проект</div></footer>
+<footer><div class="wrap">Дневник 4.4.9 · Баранов Артём, ПИ-265 · 2026 · Неофициальный проект</div></footer>
 </div>
 
 <dialog class="lbx" id="lbx" aria-label="Снимок крупно"><button type="button" id="lbxc" aria-label="Закрыть">×</button><img id="lbxi" alt=""></dialog>
