@@ -367,6 +367,7 @@ details.more[open] summary::after{transform:rotate(45deg)}
 .bars i{display:block;width:100%;max-width:70px;border-radius:12px 12px 4px 4px;background:linear-gradient(180deg,var(--acc),rgba(var(--acc-rgb),.12));transform-origin:bottom;transition:transform 1.2s var(--ease)}
 .bars.pre i{transform:scaleY(.04)}
 .bars b{font:600 13.5px var(--fh)}
+.bars b{white-space:nowrap}@media (max-width:620px){.bars b{font-size:10px;letter-spacing:-.02em}.bars{gap:6px}.blab{gap:6px;font-size:10px}}
 .blab{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:clamp(8px,2vw,18px);margin-top:8px;text-align:center;font:500 12px var(--fm);color:var(--soft)}
 
 /* недочёты */
@@ -446,13 +447,13 @@ dialog.lbx button{position:sticky;top:10px;float:right;margin:10px;z-index:2;wid
 
 <section class="hero wrap" id="hero">
   <h1>Дневник</h1>
-  <div class="beta"><i>Бета</i>версия 4.5.0</div>
+  <div class="beta"><i>Бета</i>версия 4.5.2</div>
   <p class="lead">Новый интерфейс для электронного журнала Top Academy: оценки, расписание и задания в одном тёмном окне, на ПК и iPhone.</p>
   <div class="cta"><a class="pill pri" href="#tour">Смотреть разделы</a><a class="pill" href="#install">Как установить</a></div>
   <div class="kpis glass" id="kpis">
-    <div><b class="num" data-to="80">80</b><span>версий,<br>от 2.0.0 до 4.5.0</span></div>
+    <div><b class="num" data-to="82">82</b><span>версий,<br>от 2.0.0 до 4.5.2</span></div>
     <div><b class="num" data-to="6">6</b><span>дней,<br>27.09 - 02.10</span></div>
-    <div><b class="num">≈<span data-to="28">28</span>&nbsp;ч</b><span>активной<br>работы</span></div>
+    <div><b class="num">≈<span data-to="34">34</span>&nbsp;ч</b><span>активной<br>работы</span></div>
     <div><b class="num">≈<span data-to="11">11</span>&nbsp;000</b><span>строк кода<br>и стилей</span></div>
     <div><b class="num" data-to="215">215</b><span>скриншотов с правками<br>от автора</span></div>
   </div>
@@ -800,7 +801,7 @@ dialog.lbx button{position:sticky;top:10px;float:right;margin:10px;z-index:2;wid
     <div class="ev reveal"><div><span class="v">4.1</span><span class="d">30.09</span></div><div><h3>Крипта и палитра</h3><p>Крипта, пастельная палитра, спокойный календарь, все пары по месяцам и неделям с листанием пальцем.</p></div></div>
     <div class="ev reveal"><div><span class="v">4.3</span><span class="d">01.10 · ночь</span></div><div><h3>Новый стиль</h3><p>Тёмное стекло по концепту. Пять заходов за ночь, пока цвета не совпали с концептом по пипетке. Светлая тема убрана.</p></div></div>
     <div class="ev reveal"><div><span class="v">4.4</span><span class="d">01 - 02.10</span></div><div><h3>Полировка</h3><p>Месячный вид пар, итог дня на главной, выход без автовхода, настройки в хранилище расширения, вёрстка на телефоне.</p></div></div>
-    <div class="ev big reveal"><div><span class="v">4.5.0</span><span class="d">сейчас</span></div><div><h3>Бета <small class="b">текущая</small></h3><p>Уведомления в две колонки, метка “новое” справа от названия, все пары открываются на текущей неделе, счётчики в меню не обрезаются.</p></div></div>
+    <div class="ev big reveal"><div><span class="v">4.5.2</span><span class="d">сейчас</span></div><div><h3>Бета <small class="b">текущая</small></h3><p>Уведомления в две колонки, метка “новое” справа от названия, все пары открываются на текущей неделе, счётчики в меню не обрезаются.</p></div></div>
   </div>
   <div class="evo reveal">
     <figure><div class="bare"><img src="old-42.webp" width="1440" height="1624" alt="Дневник 4.2" fetchpriority="low" decoding="async"></div><figcaption>4.2 - прежний стиль: светлее, плотные карточки.</figcaption></figure>
@@ -860,17 +861,17 @@ dialog.lbx button{position:sticky;top:10px;float:right;margin:10px;z-index:2;wid
 <section class="wrap" id="numbers">
   <div class="sh c reveal"><span class="eb">Цифры</span><h2>Сколько это заняло</h2></div>
   <div class="stats">
-    <div class="stat glass reveal"><b class="num">80</b><span>версий: от 2.0.0 до 4.5.0</span></div>
-    <div class="stat glass reveal"><b class="num">69</b><span>пакетов правок кода, каждый с проверкой</span></div>
+    <div class="stat glass reveal"><b class="num">82</b><span>версий: от 2.0.0 до 4.5.2</span></div>
+    <div class="stat glass reveal"><b class="num">71</b><span>пакетов правок кода, каждый с проверкой</span></div>
     <div class="stat glass reveal"><b class="num">215</b><span>скриншотов отправил автор: баги, идеи, сравнения</span></div>
     <div class="stat glass reveal"><b class="num">≈100</b><span>скриптов автотестов в браузере</span></div>
     <div class="stat glass reveal"><b class="num">≈11 000</b><span>строк кода и стилей в читаемом виде</span></div>
-    <div class="stat glass reveal"><b class="num">695 КБ</b><span>один файл со шрифтами внутри</span></div>
+    <div class="stat glass reveal"><b class="num">688 КБ</b><span>один файл со шрифтами внутри</span></div>
     <div class="stat glass reveal"><b class="num">≈40</b><span>адресов API журнала</span></div>
     <div class="stat glass reveal"><b class="num">15</b><span>разделов вместо журнала</span></div>
   </div>
   <div class="chart glass reveal">
-    <div class="chart-h"><h3>Часы работы по дням</h3><span class="cap">≈28 ч за 6 дней. Паузы дольше 30 минут не считались, этап расширения не вошёл.</span></div>
+    <div class="chart-h"><h3>Часы работы по дням</h3><span class="cap">≈34 ч за 6 дней. Паузы дольше 30 минут не считались, этап расширения не вошёл.</span></div>
     <div class="bars" id="bars"></div>
     <div class="blab" id="blab"></div>
   </div>
@@ -905,7 +906,7 @@ dialog.lbx button{position:sticky;top:10px;float:right;margin:10px;z-index:2;wid
   </div>
 </section>
 
-<footer><div class="wrap">Дневник 4.5.0 · Баранов Артём, ПИ-265 · 2026 · Неофициальный проект</div></footer>
+<footer><div class="wrap">Дневник 4.5.2 · Баранов Артём, ПИ-265 · 2026 · Неофициальный проект</div></footer>
 </div>
 
 <dialog class="lbx" id="lbx" aria-label="Снимок крупно"><button type="button" id="lbxc" aria-label="Закрыть">×</button><img id="lbxi" alt=""></dialog>
@@ -938,7 +939,7 @@ dialog.lbx button{position:sticky;top:10px;float:right;margin:10px;z-index:2;wid
   var bars=$('#bars');
   var kp=$('#kpis');new IntersectionObserver(function(es,o){if(!es[0].isIntersecting)return;o.disconnect();$$('[data-to]',kp).forEach(function(el){var to=+el.dataset.to,t0=performance.now();(function f(t){var p=Math.min(1,(t-t0)/1400);el.textContent=Math.round(to*(1-Math.pow(1-p,4)));if(p<1)requestAnimationFrame(f)})(t0)})}).observe(kp);}
  // часы
- var H=[['27.09',7.0],['28.09',3.5],['29.09',6.6],['30.09',4.0],['01.10',5.8],['02.10',1.2]],mx=7.5,bars=$('#bars');
+ var H=[['27.09',7.0],['28.09',3.5],['29.09',6.6],['30.09',4.0],['01.10',5.7],['02.10',7.6]],mx=8,bars=$('#bars');
  bars.innerHTML=H.map(function(h,i){return '<div><b>'+String(h[1]).replace('.',',')+' ч</b><i style="height:'+(h[1]/mx*100*.78).toFixed(1)+'%;transition-delay:'+(i*90)+'ms"></i></div>'}).join('');
  $('#blab').innerHTML=H.map(function(h){return '<span>'+h[0]+'</span>'}).join('');
  if(!still&&'IntersectionObserver' in window&&bars.getBoundingClientRect().top>innerHeight){bars.classList.add('pre');new IntersectionObserver(function(es,o){if(es[0].isIntersecting){bars.classList.remove('pre');o.disconnect()}},{threshold:.3}).observe(bars)}
